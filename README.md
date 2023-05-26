@@ -82,6 +82,54 @@ https://user-images.githubusercontent.com/11009876/132947317-3c839522-b347-4a8d-
     - You may need to modify cmake setting for TensorRT for your environment
 
 ## 2-b. Build in Linux (Jetson Xavier NX)
+
+Added by me:
+
+First, make sure that you install NVIDIA Graphics Drivers.
+You can check by
+```
+nvidia-smi
+```
+
+1. Install CUDA on Linux
+```
+sudo apt update
+sudo apt install build-essential
+# sudo apt install nvidia-cuda-toolkit
+
+sudo apt-get install linux-headers-$(uname -r)
+```
+
+Download the NVIDIA CUDA Toolkit from [https://developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads).
+Select options work for you.
+Then you will see commands similar to my case:
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb
+sudo cp /var/cuda-repo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+sudo apt-get -y install cuda
+```
+
+Run these commands.
+
+
+Reference: [https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+
+2. Install cuDNN on Linux
+```
+sudo apt install zlib1g
+```
+
+
+How to install TensorRT:
+```
+
+```
+
+
 ```sh
 mkdir build && cd build
 # cmake .. -DENABLE_TENSORRT=off

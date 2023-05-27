@@ -91,7 +91,14 @@ You can check by
 nvidia-smi
 ```
 
-1. Install CUDA on Linux
+1. Install OpenCV on Linux
+```
+sudo apt install libopencv-dev
+```
+
+2. Install CUDA on Linux
+
+- Install by package manager (Only cuda 10)
 ```
 sudo apt update
 sudo apt install build-essential
@@ -100,9 +107,12 @@ sudo apt install build-essential
 sudo apt-get install linux-headers-$(uname -r)
 ```
 
+- Install by following NVIDIA's official instructions (cuda 11 or 12)
+
 Download the NVIDIA CUDA Toolkit from [https://developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads).
 Select options work for you.
-Then you will see commands similar to my case:
+Then you will see some commands similar to the following. Run these commands.
+
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -113,23 +123,44 @@ sudo apt-get update
 sudo apt-get -y install cuda
 ```
 
-Run these commands.
-
-
 Reference: [https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
 
-2. Install cuDNN on Linux
+3. Install cuDNN on Linux
 ```
 sudo apt install zlib1g
 ```
 
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
+```
+, where `${OS}` is `debian11`, `ubuntu1804`, `ubuntu2004`, or `ubuntu2204`.
 
-How to install TensorRT:
+My case is
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+```
+
+```
+sudo apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
+sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
+sudo apt-get install libcudnn8-samples=${cudnn_version}-1+${cuda_version}
+```
+, where `${cudnn_version}` is `8.9.1.*`, `${cuda_version}` is `cuda12.1` or `cuda11.8`.
+
+
+
+
+Reference:
+[https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#install-linux](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#install-linux)
+
+
+4. How to install TensorRT:
 ```
 
 ```
 
 
+Build this repo:
 ```sh
 mkdir build && cd build
 # cmake .. -DENABLE_TENSORRT=off

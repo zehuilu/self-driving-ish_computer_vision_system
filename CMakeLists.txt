@@ -41,11 +41,15 @@ add_definitions(-DRESOURCE_DIR="${CMAKE_BINARY_DIR}/resource/")
 # Create executable file
 add_executable(${ProjectName} main.cpp)
 
+add_executable(main_qcar main_qcar.cpp)
+
 # Sub modules
 ## CommonHelper
 add_subdirectory(${PROJECT_SOURCE_DIR}/common_helper)
 target_include_directories(${ProjectName} PUBLIC ${PROJECT_SOURCE_DIR}/common_helper)
 target_link_libraries(${ProjectName} CommonHelper)
+target_include_directories(main_qcar PUBLIC ${PROJECT_SOURCE_DIR}/common_helper)
+target_link_libraries(main_qcar CommonHelper)
 
 ## InferenceHelper
 set(INFERENCE_HELPER_DIR ${PROJECT_SOURCE_DIR}/inference_helper)
@@ -55,6 +59,8 @@ add_subdirectory(${INFERENCE_HELPER_DIR}/inference_helper inference_helper)
 find_package(OpenCV REQUIRED)
 target_include_directories(${ProjectName} PUBLIC ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${ProjectName} ${OpenCV_LIBS})
+target_include_directories(main_qcar PUBLIC ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(main_qcar ${OpenCV_LIBS})
 
 ## OpenMP
 find_package(OpenMP REQUIRED)
@@ -63,8 +69,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 ## cvui
 target_include_directories(${ProjectName} PUBLIC ${PROJECT_SOURCE_DIR}/cvui)
+target_include_directories(main_qcar PUBLIC ${PROJECT_SOURCE_DIR}/cvui)
 
 ## ImageProcessor
 add_subdirectory(${PROJECT_SOURCE_DIR}/image_processor)
 target_include_directories(${ProjectName} PUBLIC ${PROJECT_SOURCE_DIR}/image_processor)
 target_link_libraries(${ProjectName} ImageProcessor)
+target_include_directories(main_qcar PUBLIC ${PROJECT_SOURCE_DIR}/image_processor)
+target_link_libraries(main_qcar ImageProcessor)
